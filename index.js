@@ -71,6 +71,22 @@ app.post("/createCategory", (req, res) => {
   });
 });
 
+// ACTUALIZAR PRODUCTO
+app.put("/products/id/:id", (req, res) => {
+  let sql = `UPDATE products SET name_product = "${req.body.name_product}" WHERE id = ${req.params.id}`;
+  db.query(sql, (err, result) => {
+    if (err) throw err;
+    res.send("Product updated...");
+  });
+});
 
+// ACTUALIZAR CATEGORIA
+app.put("/categories/id/:id", (req, res) => {
+  let sql = `UPDATE categories SET name_category = "${req.body.name_category}" WHERE id = ${req.params.id}`;
+  db.query(sql, (err, result) => {
+    if (err) throw err;
+    res.send("Category updated...");
+  });
+});
 
 app.listen(PORT, () => console.log(`Servidor levantado en el puerto ${PORT}`));
