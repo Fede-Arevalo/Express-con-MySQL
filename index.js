@@ -1,18 +1,13 @@
 const express = require("express");
 const app = express();
-const mysql = require("mysql2");
 const PORT = 3000;
+const db = require("./config/database");
 
 app.use(express.json());
 
-const db = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "Redbull22*",
-  database: "expressSQL",
-});
+// RUTAS
 
-db.connect();
+app.use("/products", require("./routes/products"));
 
 // CREAR BASE DE DATOS
 app.get("/createdb", (req, res) => {
@@ -40,15 +35,6 @@ app.get("/createTableCategories", (req, res) => {
   db.query(sql, (err, result) => {
     if (err) throw err;
     res.send("Categories table created...");
-  });
-});
-
-// CREAR NUEVO PRODUCTO
-app.post("/createProduct", (req, res) => {
-  let sql = `INSERT INTO products (name_product, category_id) values ('${req.body.name_product}', ${req.body.category_id});`;
-  db.query(sql, (err, result) => {
-    if (err) throw err;
-    res.send("Product created...");
   });
 });
 
